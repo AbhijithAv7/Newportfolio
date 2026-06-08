@@ -102,19 +102,19 @@ export default function AdminPage() {
     setChecked(true);
   }, []);
 
-  /* load projects */
-  useEffect(() => {
-    if (!authed) return;
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setProjects(JSON.parse(raw));
-    } catch {}
-  }, [authed]);
+const loadProjects = async () => {
+  const res = await fetch("/api/projects");
+  const data = await res.json();
+  setProjects(data);
+};
 
-  const persist = (list: Project[]) => {
-    setProjects(list);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-  };
+/* load projects */
+useEffect(() => {
+  if (!authed) return;
+
+  loadProjects();
+}, [authed]);
+
 
   const logout = () => {
     sessionStorage.removeItem(AUTH_KEY);
@@ -130,24 +130,62 @@ export default function AdminPage() {
     setTab("add");
   };
 
-  const saveProject = () => {
-    if (!form.title.trim() || !form.desc.trim()) { alert("Title and description are required."); return; }
-    const tags = form.tagsRaw.split(",").map((t) => t.trim()).filter(Boolean);
-    const proj: Project = {
-      id: editId ?? Date.now().toString(),
-      title: form.title.trim(), desc: form.desc.trim(),
-      status: form.status, featured: form.featured, tags,
-      github: form.github.trim(), demo: form.demo.trim(),
-      docs: form.docs.trim(),
-    };
-    persist(editId ? projects.map((p) => (p.id === editId ? proj : p)) : [...projects, proj]);
-    resetForm(); setTab("list");
+
+const saveProject = async () => {
+  if (!form.title.trim() || !form.desc.trim()) {
+    alert("Title and description are required.");
+    return;
+  }
+
+  const tags = form.tagsRaw
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean);
+
+  const proj = {
+    title: form.title.trim(),
+    desc: form.desc.trim(),
+    status: form.status,
+    featured: form.featured,
+    tags,
+    github: form.github.trim(),
+    demo: form.demo.trim(),
+    docs: form.docs.trim(),
   };
 
-  const deleteProject = (id: string) => {
-    if (!confirm("Delete this project?")) return;
-    persist(projects.filter((p) => p.id !== id));
-  };
+  const res = await fetch("/api/projects", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(proj),
+  });
+
+  if (!res.ok) {
+    alert("Failed to save project");
+    return;
+  }
+
+  resetForm();
+  setTab("list");
+
+  loadProjects();
+};
+
+const deleteProject = async (id: string) => {
+  if (!confirm("Delete this project?")) return;
+
+  const res = await fetch(`/api/projects/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    alert("Failed to delete project");
+    return;
+  }
+
+  await loadProjects();
+};
 
   const exportCode = () => {
     if (!projects.length) return "// No projects yet";

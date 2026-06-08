@@ -1,7 +1,6 @@
 "use client";
 
-import useTyping from "@/hooks/useTyping";
-
+import useTyping from "../hooks/useTyping";
 export default function TypingEffect() {
   const text = useTyping([
     "Software Developer",
