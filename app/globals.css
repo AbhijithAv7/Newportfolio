@@ -1844,3 +1844,37 @@ nav {
   .contact-row { flex-direction: column; align-items: center; }
   .contact-btn { width: 100%; max-width: 280px; }
 }
+
+.proj-status {
+  display: inline-block;
+  margin: 8px 0 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.proj-status.live {
+  color: #00ff88;
+  border: 1px solid #00ff88;
+}
+
+.proj-status.wip {
+  color: #ffcc00;
+  border: 1px solid #ffcc00;
+}
+
+.proj-status.archived {
+  color: #ff5555;
+  border: 1px solid #ff5555;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  padding: 20px 0;
+}

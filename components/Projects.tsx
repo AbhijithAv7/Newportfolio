@@ -74,6 +74,14 @@ export default function Projects() {
 
                 <p className="proj-desc">{p.desc}</p>
 
+                <div className={`proj-status ${p.status}`}>
+                  {p.status === "live"
+                  ? "🟢 Live"
+                  : p.status === "wip"
+                  ? "🟡 In Progress"
+                  : "🔴 Archived"}
+                </div>
+                
                 <div className="proj-tags">
                   {p.tags?.map((tag, ti) => (
                     <span

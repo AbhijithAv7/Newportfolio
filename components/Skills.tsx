@@ -13,7 +13,6 @@ const categories = [
       { name: "TypeScript", icon: "🔷" },
       { name: "React",      icon: "⚛️" },
       { name: "Next.js",    icon: "▲" },
-      { name: "Tailwind",   icon: "💨" },
       { name: "Bootstrap",  icon: "🅱" },
     ],
   },
@@ -28,9 +27,7 @@ const categories = [
       { name: "Flask",    icon: "🧪" },
       { name: "REST API", icon: "🔗" },
       { name: "Celery",   icon: "⚙️" },
-      { name: "Node.js",  icon: "🟢" },
-      { name: "Express",  icon: "🚂" },
-      { name: "JWT",      icon: "🔐" },
+      { name: "Next.js",  color: "#ffffff" },
     ],
   },
   {
@@ -45,8 +42,6 @@ const categories = [
       { name: "Git",        icon: "🌿" },
       { name: "GitHub",     icon: "🐙" },
       { name: "Docker",     icon: "🐳" },
-      { name: "Linux",      icon: "🐧" },
-      { name: "Nginx",      icon: "🔁" },
     ],
   },
 ];

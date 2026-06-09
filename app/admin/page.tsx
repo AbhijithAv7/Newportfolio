@@ -16,7 +16,7 @@ export interface Project {
 
 const STORAGE_KEY = "portfolio-projects";
 const AUTH_KEY    = "adm-auth";
-const PASSWORD    = "admin@123"; // 🔒 change this to your own password
+const PASSWORD    = "admin@333"; 
 
 const empty: Omit<Project, "id"> = {
   title: "",
